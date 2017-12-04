@@ -1,0 +1,15 @@
+version: '3'
+services:
+  register:
+    image: "myregistry.com/1313475/spring-cloud-demo-eureka-server"
+    ports:
+      - "8080:8080"
+  user:
+    image: "myregistry.com/1313475/spring-cloud-demo-user-webapi"
+    env_file:
+      - .env
+  news:
+    image: "myregistry.com/1313475/spring-cloud-demo-news-webapi"
+    env_file:
+      - .env
+

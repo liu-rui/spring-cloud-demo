@@ -15,9 +15,16 @@
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Edgware.RELEASE</spring-cloud.version>
+        <springfox.version>2.7.0</springfox.version>
+        <docker.registryUrl>myregistry.com</docker.registryUrl>
+        <docker.repository>1313475</docker.repository>
     </properties>
     <modules>
         <module>spring-cloud-demo-eureka-server</module>
+        <module>spring-cloud-demo-swagger</module>
+        <module>spring-cloud-demo-user-driver</module>
+        <module>spring-cloud-demo-user-webapi</module>
+        <module>spring-cloud-demo-news-webapi</module>
     </modules>
     <repositories>
         <repository>
@@ -55,7 +62,6 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -86,22 +92,12 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>springdemo-swagger</artifactId>
+                <artifactId>spring-cloud-demo-swagger</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>springdemo-userdriver</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>springdemo-commondatadriver</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>springdemo-data-mysql</artifactId>
+                <artifactId>spring-cloud-demo-user-driver</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -116,4 +112,38 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.4.12</version>
+                    <executions>
+                        <execution>
+                            <id>build-image</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <imageName>${docker.registryUrl}/${docker.repository}/${project.name}</imageName>
+                        <maintainer>liurui</maintainer>
+                        <baseImage>java</baseImage>
+                        <workdir>/data</workdir>
+                        <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>
+                        <resources>
+                            <resource>
+                                <targetPath>./</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.build.finalName}.jar</include>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
