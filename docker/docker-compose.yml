@@ -1,9 +1,29 @@
 version: '3'
 services:
+  zipkin:
+    image: "myregistry.com/1313475/spring-cloud-demo-zipkin"
+    ports:
+      - "8050:8050"
+  hystrix:
+    image: "myregistry.com/1313475/spring-cloud-demo-hystrix"
+    ports:
+      - "8060:8060"
+  zuul:
+    image: "myregistry.com/1313475/spring-cloud-demo-zuul"
+    env_file:
+      - .env
+    ports:
+      - "8070:8070"
   register:
-    image: "myregistry.com/1313475/spring-cloud-demo-eureka-server"
+    image: "myregistry.com/1313475/spring-cloud-demo-eureka"
     ports:
       - "8080:8080"
+  turbine-news:
+    image: "myregistry.com/1313475/spring-cloud-demo-turbine"
+    env_file:
+      - .env
+    environment:
+      - turbine.app-config=news
   user:
     image: "myregistry.com/1313475/spring-cloud-demo-user-webapi"
     env_file:
@@ -12,4 +32,3 @@ services:
     image: "myregistry.com/1313475/spring-cloud-demo-news-webapi"
     env_file:
       - .env
-

@@ -3,8 +3,10 @@ package com.github.liurui.springdemo;
 import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.BasicErrorController;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,11 +40,7 @@ public class SwaggerConfiguration {
     public Docket createRestApi() {
         Predicate<RequestHandler> predicate = input -> {
             Class<?> declaringClass = input.declaringClass();
-            if (declaringClass.isAnnotationPresent(RestController.class))
-                return true;
-//            if (input.isAnnotatedWith(ResponseBody.class))
-//                return true;
-            return false;
+            return declaringClass.isAnnotationPresent(RestController.class);
         };
 
         return new Docket(DocumentationType.SWAGGER_2)

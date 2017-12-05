@@ -18,9 +18,5 @@ public class App {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = new SpringApplicationBuilder().sources(App.class).run(args);
-
-
-
-
     }
 }

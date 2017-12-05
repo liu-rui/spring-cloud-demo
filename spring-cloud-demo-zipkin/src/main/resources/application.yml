@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: zipkin
+  rabbitmq:
+    host: 172.18.115.41
+    port: 5672
+    username: guest
+    password: guest
+server:
+  port: 8050
+zipkin:
+  storage:
+    type: elasticsearch
+    elasticsearch:
+      cluster: elasticsearch
+      hosts:  http://172.18.115.54:9200
+      index: zipkin
+      indexShards: 5
+      indexReplicas: 1
+      username: elastic
+      password: changeme

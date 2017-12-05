@@ -1,8 +1,16 @@
 spring:
   application:
-    name: News
-  zipkin:
-    base-url: http://localhost:9411
+    name: news
+#  zipkin:
+#    base-url: http://localhost:8050
+  rabbitmq:
+    host: 172.18.115.41
+    port: 5672
+    username: guest
+    password: guest
+  sleuth:
+    sampler:
+      percentage: 1.0
 server:
   port: 8201
 restApi:
@@ -14,13 +22,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8080/eureka/
-#User:
-#  ribbon:
-#    MaxAutoRetries: 2
-#    MaxAutoRetriesNextServer: 2
-#    OkToRetryOnAllOperations: true
-#    ConnectTimeout: 250
-#    ReadTimeout: 500
 ribbon:
   ConnectTimeout: 1000
   ReadTimeout: 1000
@@ -28,14 +29,6 @@ ribbon:
   MaxAutoRetriesNextServer: 2
   OkToRetryOnAllOperations: true
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 3000
-management:
-  endpoints:
-    web:
-      base-path:
-#logging:
-#  level:
-#    com.github.liurui.springdemo.news.repositories.CityApiRepository: debug
-#    com.github.liurui.springdemo.news.repositories.UserApiRepository: debug
 feign:
   hystrix:
     enabled: true
