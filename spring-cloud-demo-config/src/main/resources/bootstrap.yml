@@ -1,0 +1,45 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:liu-rui/spring-cloud-demo-config.git
+          force-pull: true
+          timeout: 10
+        health:
+          repositories:
+            check:
+              name: app
+              label: master
+              profiles: default
+      fail-fast: true
+    stream:
+      bindings:
+        springCloudBusInput:
+          binder: kafka1
+        springCloudBusOutput:
+          binder: kafka1
+      binders:
+        kafka1:
+          type: kafka
+          defaultCandidate: false
+          environment:
+            spring.cloud.stream.kafka.binder:
+              brokers: 172.18.115.134,172.18.115.135,172.18.115.136
+              zkNodes: 172.18.115.134,172.18.115.135,172.18.115.136
+  application:
+    name: config
+server:
+  port: 8040
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8080/eureka/
+    enabled: false
+management:
+  security:
+    enabled: false
+#logging:
+#  level:
+#    org.springframework.cloud: debug
+#    org.springframework.boot: debug

@@ -2,13 +2,9 @@ package com.github.liurui.springdemo;
 
 import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.BasicErrorController;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;

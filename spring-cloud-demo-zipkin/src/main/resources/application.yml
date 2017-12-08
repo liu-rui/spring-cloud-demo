@@ -1,11 +1,25 @@
 spring:
   application:
     name: zipkin
-  rabbitmq:
-    host: 172.18.115.41
-    port: 5672
-    username: guest
-    password: guest
+#  rabbitmq:
+#    host: 172.18.115.41
+#    port: 5672
+#    username: guest
+#    password: guest
+  cloud:
+    stream:
+      bindings:
+        sleuth:
+          binder: kafka1
+          group: zipkin
+      binders:
+        kafka1:
+          type: kafka
+          defaultCandidate: false
+          environment:
+            spring.cloud.stream.kafka.binder:
+              brokers: 172.18.115.134,172.18.115.135,172.18.115.136
+              zkNodes: 172.18.115.134,172.18.115.135,172.18.115.136
 server:
   port: 8050
 zipkin:

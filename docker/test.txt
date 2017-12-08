@@ -1,0 +1,8 @@
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d 'sdd' 'http://172.18.115.133:8070/news/news?userId=1'
+curl -X POST 'http://172.18.115.133:8040/bus/refresh'
+echo 11 > 1.txt
+ab -n 10000 -c 20  -p 1.txt http://172.18.115.133:8070/news/news?userId=1
+kafka-console-consumer.sh --zookeeper 172.18.115.134:2181,172.18.115.135:2181,172.18.115.136:2181  --topic sleuth
+kafka-console-consumer.sh --zookeeper 172.18.115.134:2181,172.18.115.135:2181,172.18.115.136:2181  --topic serviceLog
+kafka-console-consumer.sh --zookeeper 172.18.115.134:2181,172.18.115.135:2181,172.18.115.136:2181 --topic springCloudBus
+kafka-topics.sh   --zookeeper 172.18.115.134:2181,172.18.115.135:2181,172.18.115.136:2181 --list

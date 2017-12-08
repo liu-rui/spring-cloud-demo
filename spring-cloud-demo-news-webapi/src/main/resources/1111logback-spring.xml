@@ -2,9 +2,10 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>    ​
     <springProperty scope="context" name="springAppName" source="spring.application.name"/>
-    <springProperty scope="context" name="log.level" source="log.level" defaultValue="info"/>
-    <springProperty scope="context" name="kafka.host" source="log.kafka.host" defaultValue="172.18.115.47:9092"/>
-    <springProperty scope="context" name="kafka.topic" source="log.kafka.topic" defaultValue="p-input"/>
+    <springProperty scope="context" name="kafka.enabled" source="logback.kafka.enabled" defaultValue="false"/>
+    <springProperty scope="context" name="log.level" source="logback.level" defaultValue="info"/>
+    <springProperty scope="context" name="kafka.host" source="logback.kafka.host"/>
+    <springProperty scope="context" name="kafka.topic" source="logback.kafka.topic" defaultValue="serviceLog"/>
     <property name="CONSOLE_LOG_PATTERN"
               value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -50,6 +51,10 @@
     </appender>
     <root level="${log.level}">
         <appender-ref ref="console"/>
-        <appender-ref ref="asyncKafkaAppender"/>
+        <if condition='property("kafka.enabled").equalsIgnoreCase("true")'>
+            <then>
+                <appender-ref ref="asyncKafkaAppender"/>
+            </then>
+        </if>
     </root>
 </configuration>

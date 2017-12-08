@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: news
+  cloud:
+    config:
+      profile: dev
+      uri: http://localhost:8040
+#      discovery:
+#        enabled: true
+#        service-id: config
+eureka:
+  client:
+#    service-url:
+#      defaultZone: http://localhost:8081/eureka/
+#    register-with-eureka: false
+    enabled: false
+management:
+  security:
+    enabled: false
+#logging:
+#  level:
+#    org.springframework.cloud: debug
+#    org.springframework.boot: debug

@@ -1,0 +1,50 @@
+spring:
+#  zipkin:
+#    base-url: http://localhost:8050
+  application:
+    name: user-v1
+#  rabbitmq:
+#    host: 172.18.115.41
+#    port: 5672
+#    username: guest
+#    password: guest
+  cloud:
+    stream:
+      bindings:
+#        hystrixStreamOutput:
+#          binder: kafka1
+        sleuth:
+          binder: kafka1
+        springCloudBusInput:
+          binder: kafka1
+        springCloudBusOutput:
+          binder: kafka1
+      binders:
+        kafka1:
+          type: kafka
+          defaultCandidate: false
+          environment:
+            spring.cloud.stream.kafka.binder:
+              brokers: 172.18.115.134,172.18.115.135,172.18.115.136
+              zkNodes: 172.18.115.134,172.18.115.135,172.18.115.136
+  sleuth:
+    sampler:
+      percentage: 1.0
+server:
+  port: 8091
+restApi:
+  swagger:
+    title: springdemo-用户webapi
+    version: 1
+    description: 用户webapi!!!!
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8080/eureka/
+management:
+  security:
+    enabled: false
+#logging:
+#  level:
+#     org.springframework.cloud.sleuth : trace
+spring.sleuth.rxjava.schedulers.hook.enabled: false

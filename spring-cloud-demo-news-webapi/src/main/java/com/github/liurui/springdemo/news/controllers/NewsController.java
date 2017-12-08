@@ -7,16 +7,23 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api(tags = {"新闻"}, description = "新闻基本操作")
 @RequestMapping("/news")
+@RefreshScope
 public class NewsController {
     public static final Logger LOGGER = LoggerFactory.getLogger(NewsController.class);
 
     @Autowired
     UserApiRepository userApiRepository;
+
+    @Value("${name}")
+    String name;
+
 
     @RequestMapping(method = RequestMethod.POST)
     public String create(@ApiParam(name = "userId", value = "用户编码", required = true)
@@ -28,6 +35,6 @@ public class NewsController {
         User user = userApiRepository.info(userId);
         String login = userApiRepository.login("sd", "sdd");
 
-        return String.format("user:%s login:%s news:%s", user, login, news);
+        return String.format("user:%s login:%s news:%s name:%s", user, login, news, name);
     }
 }

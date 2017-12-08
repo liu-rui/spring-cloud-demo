@@ -31,6 +31,7 @@
         <module>spring-cloud-demo-hystrix</module>
         <module>spring-cloud-demo-turbine</module>
         <module>spring-cloud-demo-zipkin</module>
+        <module>spring-cloud-demo-config</module>
     </modules>
     <repositories>
         <repository>
@@ -115,6 +116,16 @@
                 <groupId>com.github.danielwegener</groupId>
                 <artifactId>logback-kafka-appender</artifactId>
                 <version>0.1.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.kafka</groupId>
+                        <artifactId>kafka-clients</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.kafka</groupId>
+                        <artifactId>kafka_2.11</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
@@ -134,6 +145,7 @@
         </dependencies>
     </dependencyManagement>
     <build>
+        <finalName>${project.artifactId}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -153,9 +165,9 @@
                     <configuration>
                         <imageName>${docker.registryUrl}/${docker.repository}/${project.artifactId}</imageName>
                         <maintainer>liurui</maintainer>
-                        <baseImage>java</baseImage>
+                        <baseImage>1313475/java:8</baseImage>
                         <workdir>/data</workdir>
-                        <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>
+                        <cmd>["java", "-jar", "${project.build.finalName}.jar"]</cmd>
                         <resources>
                             <resource>
                                 <targetPath>./</targetPath>

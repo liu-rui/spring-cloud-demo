@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: news
+#  zipkin:
+#    base-url: http://localhost:8050
+#  rabbitmq:
+#    host: 172.18.115.41
+#    port: 5672
+#    username: guest
+#    password: guest
+  cloud:
+    stream:
+      bindings:
+#        hystrixStreamOutput:
+#          binder: kafka1
+        sleuth:
+          binder: kafka1
+      binders:
+        kafka1:
+          type: kafka
+          defaultCandidate: false
+          environment:
+            spring.cloud.stream.kafka.binder:
+              brokers: 172.18.115.134,172.18.115.135,172.18.115.136
+              zkNodes: 172.18.115.134,172.18.115.135,172.18.115.136
+  sleuth:
+    sampler:
+      percentage: 1.0
+#    hystrix.strategy.enabled: false
+server:
+  port: 8201
+restApi:
+  swagger:
+    title: springdemo-新闻webapi
+    version: 1
+    description: 新闻webapi!！！
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8080/eureka/
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 1000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  OkToRetryOnAllOperations: true
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 3000
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+spring.sleuth.rxjava.schedulers.hook.enabled: false
+#logging:
+#  level:
+#     org.springframework.cloud.sleuth : trace
+#spring.sleuth.integration.enabled: false
+logback:
+  kafka:
+    enabled: true
+    host: 172.18.115.134:9092

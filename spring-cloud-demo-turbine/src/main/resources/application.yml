@@ -1,13 +1,42 @@
 spring:
   application:
     name: turbine
+#  rabbitmq:
+#    host: 172.18.115.41
+#    port: 5672
+#    username: guest
+#    password: guest
+#  cloud:
+#    stream:
+#      bindings:
+#        turbineStreamInput:
+#          binder: kafka1
+#          group: turbine
+##        sleuth:
+###          destination: p-input1
+##          binder: kafka1
+#      binders:
+#        kafka1:
+#          type: kafka
+#          defaultCandidate: false
+#          environment:
+#            spring.cloud.stream.kafka.binder:
+#              brokers: 172.18.115.134,172.18.115.135,172.18.115.136
+#              zkNodes: 172.18.115.134,172.18.115.135,172.18.115.136
 server:
-  port: 8050
+  port: 8061
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8080/eureka/
+  instance:
+    prefer-ip-address: true
 turbine:
   combine-host-port: true
   clusterNameExpression: "'default'"
   app-config: news
+#  stream:
+#    port: 8989
+#logging:
+#  level:
+#    default: trace
